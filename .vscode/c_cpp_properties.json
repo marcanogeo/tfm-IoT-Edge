@@ -1,39 +1,40 @@
 {
-  "configurations": [
-    {
-      "name": "ESP32 Arduino",
-      "includePath": [
-        "${workspaceFolder}/**",
-        "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/cores/esp32",
-        "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/variants/**",
-        "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/libraries/**",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/**",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include/soc/esp32/include",
-        "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/libraries/WiFi/src",
-        "${env:HOME}/Library/Arduino15/packages/arduino/hardware/esp32/2.0.18-arduino.5/libraries/WiFi/src",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/include",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/sys-include",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/xtensa-*/include",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include/freertos/**",
-        "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/**/FreeRTOS-Kernel/**",
-        "${env:HOME}/Library/Arduino15/packages/arduino/hardware/esp32/2.0.18-arduino.5/tools/sdk/**/freertos/**"
-      ],
-      "defines": [
-        "ARDUINO=10805"
-      ],
-  "compilerPath": "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp-x32/2507/bin/xtensa-esp32-elf-gcc",
-      "cStandard": "c11",
-      "cppStandard": "c++17",
-  "intelliSenseMode": "gcc-x64",
-      "browse": {
-        "path": [
-          "${workspaceFolder}",
-          "/Users/mac/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/cores/esp32"
-        ],
-        "limitSymbolsToIncludedHeaders": true
-      }
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "ESP32 Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/cores/esp32",
+                "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/variants/**",
+                "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/libraries/**",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/**",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include/soc/esp32/include",
+                "${env:HOME}/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/libraries/WiFi/src",
+                "${env:HOME}/Library/Arduino15/packages/arduino/hardware/esp32/2.0.18-arduino.5/libraries/WiFi/src",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/include",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/sys-include",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/**/xtensa-*/include",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include/freertos/**",
+                "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/**/FreeRTOS-Kernel/**",
+                "${env:HOME}/Library/Arduino15/packages/arduino/hardware/esp32/2.0.18-arduino.5/tools/sdk/**/freertos/**",
+                "/Users/mac/Library/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-07e9bf49-v1/esp32/include/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos"
+            ],
+            "defines": [
+                "ARDUINO=10805"
+            ],
+            "compilerPath": "${env:HOME}/Library/Arduino15/packages/esp32/tools/esp-x32/2507/bin/xtensa-esp32-elf-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "/Users/mac/Library/Arduino15/packages/esp32/hardware/esp32/3.3.2/cores/esp32"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
 }
