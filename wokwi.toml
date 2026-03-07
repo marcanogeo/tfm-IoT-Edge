@@ -1,5 +1,5 @@
 [wokwi]
 version = 1
-firmware = 'build/flasher_args.json'
-elf = 'build/example_app.elf'
-rfc2217ServerPort = 4000
+enableInternet = true
+firmware = '.pio/build/featheresp32/firmware.bin'
+elf = '.pio/build/featheresp32/firmware.elf'
