@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "DHTesp.h"
 #include <WiFi.h>
-#include <HTTPClient.h>
+//#include <HTTPClient.h>
 #include "time.h"
 #include <PubSubClient.h>
 
@@ -70,7 +70,6 @@ void connectWiFi(){
   }
   Serial.println("WiFi status: " + String(WiFi.status()));
 }
-
 
 void printLocalTime(){
   struct tm timeinfo;
@@ -192,7 +191,7 @@ void setup(){
 
   randomSeed(esp_random()); // Initialize random seed for MQTT client ID
 
- connectWiFi();
+  connectWiFi();
 
   dhtSensor.setup(DHT_PIN, DHTesp::DHT22);
   SensorMQ2();
