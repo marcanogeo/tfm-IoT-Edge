@@ -2,5 +2,5 @@
 [wokwi]
 version = 1
 enableInternet = true
-firmware = '.pio/build/nodo2/firmware.bin'
-elf = '.pio/build/nodo2/firmware.elf'
+firmware = '../.pio/build/nodo2/firmware.bin'
+elf = '../.pio/build/nodo2/firmware.elf'
