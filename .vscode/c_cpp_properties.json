@@ -10,8 +10,6 @@
             "includePath": [
                 "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/include",
                 "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/src",
-                "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
-                "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/.pio/libdeps/featheresp32/PubSubClient/src",
                 "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/.pio/libdeps/featheresp32/DHT sensor library for ESPx",
@@ -224,6 +222,7 @@
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Ethernet/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/FFat/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
+                "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdate/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdateServer/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/I2S/src",
@@ -241,6 +240,7 @@
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
+                "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 ""
@@ -250,8 +250,6 @@
                 "path": [
                     "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/include",
                     "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/src",
-                    "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
-                    "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/.pio/libdeps/featheresp32/PubSubClient/src",
                     "/Users/mac/Documents/PlatformIO/Projects/IoTSystem/.pio/libdeps/featheresp32/DHT sensor library for ESPx",
@@ -464,6 +462,7 @@
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Ethernet/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/FFat/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
+                    "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdate/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdateServer/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/I2S/src",
@@ -481,6 +480,7 @@
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
+                    "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "/Users/mac/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     ""

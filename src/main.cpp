@@ -19,6 +19,8 @@ const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;
 
 const char* NODE_ID = "nodo1";
+const char* ZONE_ID = "zona_norte";
+
 const char* mqtt_topic_data = "tfm/ambiental/nodo1/telemetria";
 const char* mqtt_topic_status = "tfm/ambiental/nodo1/estado";
 const char* mqtt_topic_cmd = "tfm/ambiental/nodo1/cmd";
@@ -91,6 +93,7 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
   Serial.print("Mensaje recibido [");
   Serial.print(topic);
   Serial.print("]:");
+
   String msg;
   for (unsigned int i = 0; i < length; i++) {
     msg += (char)message[i];
@@ -106,14 +109,25 @@ void reconnectMQTT() {
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
       //client.subscribe("sensor/wokwi/#");
+      Serial.println("Client ID: " + clientId);
+      Serial.println("Topic Telemetria: " + String(mqtt_topic_data));
+      Serial.println("Topic status: " + String(mqtt_topic_status));
+    
       client.subscribe(mqtt_topic_cmd);
-      client.publish(mqtt_topic_status, "online");
+
+      bool ok1 = client.publish(mqtt_topic_status, "online", true);
+     // bool ok2 = client.publish("tfm/debug/nodo1", "hola_desde_wokwi", true);
+
+      Serial.println(ok1 ? "Estado retained ok": "Estado retained ERROR");
+      //Serial.println(ok2 ? "Debug retained ok": "Debug retained ERROR");
+
+      //client.publish(mqtt_topic_status, "online");
     } else {
       Serial.print("failed, rc=");
-      Serial.print(client.state());
+      Serial.println(client.state());
       Serial.println(" try again in 5 seconds");
-     // delay(5000);
-     millis() > 5000 ? delay(0) : delay(5000); // Non-blocking delay
+      //delay(5000);
+      millis() > 5000 ? delay(0) : delay(5000); // Non-blocking delay
     }
   }
 }
@@ -125,6 +139,11 @@ void SensorMQ2(){ //MQ2 sensor initialization
 }
 
 void publishTelemetry(){
+
+  if(!client.connected()){
+    Serial.println("MQTT not connected, skipping telemetry publish");
+    return;
+  }
 
     TempAndHumidity data = dhtSensor.getTempAndHumidity();
 
@@ -162,9 +181,10 @@ void publishTelemetry(){
   //payload += "}";
   String payload = "{";
   payload += "\"node_id\":\"" + String(NODE_ID) + "\",";
+  payload += "\"zone_id\":\"" + String(ZONE_ID) + "\",";
   payload += "\"timestamp\":" + String(ts) + ",";
-  payload += "\"temperature\":" + String(data.temperature, 2) + ",";
-  payload += "\"humidity\":" + String(data.humidity, 1) + ",";
+  payload += "\"temperature_c\":" + String(data.temperature, 2) + ",";
+  payload += "\"humidity_pct\":" + String(data.humidity, 1) + ",";
   payload += "\"gas_detected\":" + String(gasValue == 0 ? 1 : 0);
   payload += "}";
   //client.publish(mqtt_topic_temp, String(data.temperature, 2).c_str());
@@ -181,7 +201,7 @@ void publishTelemetry(){
   Serial.println("Payload: " + payload);
   Serial.println(ok ? "Publicación MQTT correcta" : "Error al publicar MQTT");
   Serial.println("------------------------");
-  Serial.println(ok ? "Topicos enviados" : "ERROR al enviar topicos");
+  //Serial.println(ok ? "Topicos enviados" : "ERROR al enviar topicos");
 
 }
 
@@ -214,6 +234,7 @@ void loop(){
    if(!client.connected()){
     reconnectMQTT();
   }
+  
   client.loop();
 
   unsigned long now = millis();
