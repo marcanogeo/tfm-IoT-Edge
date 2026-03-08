@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "author": "👩\u200d💻 Georgelys Marcano",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -115.2, "left": -52.76, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -316.5, "left": -178.2, "attrs": {} },
+    {
+      "type": "wokwi-gas-sensor",
+      "id": "gas1",
+      "top": -244,
+      "left": -429.1,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": -269.1,
+      "left": -341.5,
+      "rotate": 90,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "dht1:SDA", "esp:27", "green", [ "v0" ] ],
+    [ "gas1:VCC", "esp:5V", "red", [ "v230.4", "h327.15" ] ],
+    [ "gas1:GND", "esp:GND.1", "black", [ "h0.8", "v182.4" ] ],
+    [ "gas1:DOUT", "esp:14", "green", [ "h0.3", "v163.2" ] ],
+    [ "ldr1:DO", "esp:34", "green", [ "v105.6", "h211.65" ] ],
+    [ "ldr1:GND", "esp:GND.1", "black", [ "v96", "h0.4", "v96" ] ],
+    [ "ldr1:VCC", "esp:3V3", "red", [ "v67.2", "h191.85" ] ],
+    [ "gas1:AOUT", "esp:35", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

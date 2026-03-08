@@ -1,0 +1,6 @@
+
+[wokwi]
+version = 1
+enableInternet = true
+firmware = '.pio/build/nodo4/firmware.bin'
+elf = '.pio/build/nodo4/firmware.elf'

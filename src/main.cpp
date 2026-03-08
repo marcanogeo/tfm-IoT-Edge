@@ -36,8 +36,8 @@ const int mqtt_port = 1883;
   const char* NODE_ID = "nodo4";
   const char* ZONE_ID = "zona_oeste";
 #else
-  const char* NODE_ID = nodoX;
-  const char* ZONE_ID = zonaX;
+  const char* NODE_ID = "nodoX";
+  const char* ZONE_ID = "zonaX";
 #endif      
 //--------Nodo1 -----------//
 //const char* NODE_ID = "nodo1";
