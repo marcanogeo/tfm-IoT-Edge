@@ -24,6 +24,23 @@ Este proyecto es una plataforma IoT basada en PlatformIO, diseñada para gestion
 3. Compila y sube el firmware a los nodos simulados usando los entornos definidos en `platformio.ini`.
 4. Utiliza los diagramas de Wokwi para simular el hardware de cada nodo.
 
+## Backend MQTT -> InfluxDB
+
+Servicio Python que:
+
+1. Se suscribe a `tfm/ambiental/+/telemetria`
+2. Valida el payload JSON
+3. Escribe telemetría en InfluxDB v2
+
+## Ejecución local
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python app/main.py
+
 ## Licencia
 
 Consulta el archivo LICENSE para más detalles.
