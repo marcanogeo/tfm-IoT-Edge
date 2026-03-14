@@ -41,6 +41,7 @@ pip install -r requirements.txt
 cp .env.example .env
 python app/main.py
 
-## Licencia
+
+Licencia
 
 Consulta el archivo LICENSE para más detalles.
