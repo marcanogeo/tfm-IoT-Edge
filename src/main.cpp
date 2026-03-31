@@ -8,13 +8,13 @@
 #define MQ2pin 14 //Pin where the MQ2 sensor is connected
 const int DHT_PIN = 27; // Pin where the DHT22 sensor is connected
 
-//Setting WiFi credentials
+//Setting WiFi credentials for Wokwi simulation
 const char* SSID = "Wokwi-GUEST";
 const char* psswd = "";
 //String SSID = "Wokwi-GUEST";
 //String psswd = "";
 
-//MQTT Broker settings
+//Public MQTT Broker settings
 //const char* mqtt_server = "broker.emqx.io";
 const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;

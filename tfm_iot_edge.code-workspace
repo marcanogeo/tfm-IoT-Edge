@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../../VsCodeProjects/tfm_iot_edge"
+		},
+		{
+			"name": "tfm_iot_edge",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
