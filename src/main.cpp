@@ -6,6 +6,7 @@
 
 #define MQ2_DIGITAL_PIN 14 //Pin where the MQ2 sensor is connected
 const int DHT_PIN = 27; // Pin where the DHT22 sensor is connected
+#define MQ2_ANALOG_PIN 35 //Pin for analog reading of MQ2 sensor (if needed)
 
 //Setting WiFi credentials for Wokwi simulation
 const char* SSID = "Wokwi-GUEST";
@@ -39,6 +40,7 @@ const int mqtt_port = 1883;
 String mqtt_topic_data;
 String mqtt_topic_status;
 String mqtt_topic_cmd;
+String mqtt_topic_alerts;
 
 // Configuración NTP
 const char* ntpServer = "pool.ntp.org"; // NTP server
@@ -54,7 +56,8 @@ const unsigned long publishInterval = 5000; // Publish every 5 seconds
 
 //int sensorValue; // variable to store the sensor value
 //int gasValue = 0; // Variable to store the gas sensor value
-int gasValue = digitalRead(MQ2_DIGITAL_PIN); // Initialize gasValue with the current state of the MQ2 sensor
+int gasDetected = digitalRead(MQ2_DIGITAL_PIN); // Initialize gasValue with the current state of the MQ2 sensor
+int rawValue = analogRead(MQ2_ANALOG_PIN); // Read the raw analog value from the MQ2 sensor
 
  // WiFi connection function
 void connectWiFi(){
@@ -85,6 +88,7 @@ void connectWiFi(){
   Serial.println("WiFi status: " + String(WiFi.status()));
 }
 
+// Function to print local time obtained from NTP
 void printLocalTime(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
@@ -101,6 +105,7 @@ void printLocalTime(){
                 timeinfo.tm_sec);
 }
 
+// MQTT callback function to handle incoming messages
 void mqttCallback(char* topic, byte* message, unsigned int length) {
   Serial.print("Mensaje recibido [");
   Serial.print(topic);
@@ -113,6 +118,7 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
   Serial.println(msg);
 }
 
+// Function to reconnect to MQTT broker if connection is lost
 void reconnectMQTT() {
   while (!client.connected()) {
     Serial.print("Connecting MQTT...");
@@ -139,11 +145,27 @@ void reconnectMQTT() {
     }
   }
 }
+float CalculateRS(int adcValue, float vcc = 3.3, float rl = 5.0){
+  float voltage = (adcValue / 4095.0) * vcc; // Convert ADC value to voltage
+  if (voltage <= 0.01) return -1; // Avoid division by zero or very low voltage
+  //freturn (vcc - voltage) * rl / voltage; // Calculate RS using the voltage divider formula
+  return rs;
+}
 
-void SensorMQ2(){ //MQ2 sensor initialization
-  pinMode(MQ2_DIGITAL_PIN, INPUT); // set the pin as input
-  Serial.println("MQ2 warming up");
-  delay(200);
+// Function to initialize MQ2 sensor
+void SensorMQ2(){ 
+  //int rawValue = analogRead(MQ2_ANALOG_PIN); // Read the raw analog value from the MQ2 sensor
+  //float gasPercentage = (rawValue / 4095.0) * 100.0; // Convert raw value to percentage (assuming 12-bit ADC)
+  //Serial.println("MQ2 raw value: " + String(rawValue));
+  //Serial.println("MQ2 gas percentage: " + String(gasPercentage, 2) + "%");
+  //float ratio = gasPercentage / 100.0; // Convert percentage to ratio (0.0 to 1.0)
+
+
+  //pinMode(MQ2_DIGITAL_PIN, INPUT); // set the pin as input
+  //Serial.println("MQ2 warming up");
+  MQ2Sensor mq2(MQ2_ANALOG_PIN, 3.3, 5.0, 10.0); // Create MQ2 sensor object with specified parameters
+
+  delay(2000);
 }
 
 void publishTelemetry(){
@@ -163,7 +185,7 @@ void publishTelemetry(){
 
   //print value sensor gas
   //sensorValue = digitalRead(MQ2pin); // read digital output pin
-  gasValue = digitalRead(MQ2_DIGITAL_PIN);
+  gasDetected = digitalRead(MQ2_DIGITAL_PIN);
   unsigned long ts = time(nullptr);
 
   String payload = "{";
@@ -173,10 +195,11 @@ void publishTelemetry(){
   payload += "\"sensors\"{";
   payload += "\"temperature_c\":" + String(data.temperature, 2) + ",";
   payload += "\"humidity_pct\":" + String(data.humidity, 1) + ",";
-  payload += "\"gas_detected\":" + String(gasValue == 0 ? 1 : 0);
+  payload += "\"gas_detected\":" + String(gasDetected == 0 ? 1 : 0);
   payload += "\"gas_mq2_raw\":" + String(gas.raw) + ",";
   payload += "\"gas_mq2_ratio\":" + String(gas.ratio, 2) + ",";
   payload += "\"gas_mq2_ppm\":" + String(gas.ppm);
+  payload += "\"luz\":" + String(analogRead(LIGHT_SENSOR_PIN));
   payload += "}}";
 
   bool ok = client.publish(mqtt_topic_data.c_str(), payload.c_str());
@@ -195,9 +218,10 @@ void setup(){
 
   randomSeed(esp_random()); // Initialize random seed for MQTT client ID
 
-  mqtt_topic_data = "tfm/ambiental/" + String(NODE_ID) + "/telemetria";
-  mqtt_topic_status = "tfm/ambiental/" + String(NODE_ID) + "/estado";
-  mqtt_topic_cmd = "tfm/ambiental/" + String(NODE_ID) + "/cmd";
+  mqtt_topic_data = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/telemetria";
+  mqtt_topic_status = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/estado";
+  mqtt_topic_cmd = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/cmd";
+  mqtt_topic_alerts = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/alerta";
 
   Serial.println("Nodo configurado: " + String(NODE_ID));  
   Serial.println("Zona configurada: " + String(ZONE_ID));
@@ -206,6 +230,7 @@ void setup(){
 
   dhtSensor.setup(DHT_PIN, DHTesp::DHT22);
   SensorMQ2();
+  analogReadResolution(12); // Set ADC resolution to 12 bits (0-4095) for ESP32
 
   // Initialize and synchronize time with NTP
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
