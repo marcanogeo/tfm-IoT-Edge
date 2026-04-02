@@ -1,21 +1,17 @@
 #include <Arduino.h>
 #include "DHTesp.h"
 #include <WiFi.h>
-//#include <HTTPClient.h>
 #include "time.h"
 #include <PubSubClient.h>
 
-#define MQ2pin 14 //Pin where the MQ2 sensor is connected
+#define MQ2_DIGITAL_PIN 14 //Pin where the MQ2 sensor is connected
 const int DHT_PIN = 27; // Pin where the DHT22 sensor is connected
 
 //Setting WiFi credentials for Wokwi simulation
 const char* SSID = "Wokwi-GUEST";
 const char* psswd = "";
-//String SSID = "Wokwi-GUEST";
-//String psswd = "";
 
 //Public MQTT Broker settings
-//const char* mqtt_server = "broker.emqx.io";
 const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;
 
@@ -39,20 +35,10 @@ const int mqtt_port = 1883;
   const char* NODE_ID = "nodoX";
   const char* ZONE_ID = "zonaX";
 #endif      
-//--------Nodo1 -----------//
-//const char* NODE_ID = "nodo1";
-//const char* ZONE_ID = "zona_norte";
-//const char* mqtt_topic_data = "tfm/ambiental/nodo1/telemetria";
-//const char* mqtt_topic_status = "tfm/ambiental/nodo1/estado";
-//const char* mqtt_topic_cmd = "tfm/ambiental/nodo1/cmd";
 
 String mqtt_topic_data;
 String mqtt_topic_status;
 String mqtt_topic_cmd;
-
-//Conexión a thingsboard.io
-//String tbhost = "https://demo.thingsboard.io";
-//String tbToken = "bqyi9n4pw2li4huo4019";
 
 // Configuración NTP
 const char* ntpServer = "pool.ntp.org"; // NTP server
@@ -66,8 +52,9 @@ DHTesp dhtSensor; // Create DHT sensor object
 unsigned long lastPublish = 0;
 const unsigned long publishInterval = 5000; // Publish every 5 seconds
 
-int gasValue = 0; // Variable to store the gas sensor value
 //int sensorValue; // variable to store the sensor value
+//int gasValue = 0; // Variable to store the gas sensor value
+int gasValue = digitalRead(MQ2_DIGITAL_PIN); // Initialize gasValue with the current state of the MQ2 sensor
 
  // WiFi connection function
 void connectWiFi(){
@@ -75,7 +62,7 @@ void connectWiFi(){
   if(WiFi.status() == WL_CONNECTED) return;
 
   WiFi.mode(WIFI_STA);
-  //WiFi.begin(SSID.c_str(), psswd.c_str());
+
   WiFi.begin(SSID, psswd);
   
   Serial.println("Connecting to WiFi");
@@ -90,7 +77,7 @@ void connectWiFi(){
   if (WiFi.status() == WL_CONNECTED) {
     delay(1000);
     Serial.println("\nConnected to WiFi");
-    //Serial.println("IP address: ");
+
     Serial.println(WiFi.localIP());
   } else {
     Serial.println("\nWiFi connection failed");
@@ -158,7 +145,7 @@ void reconnectMQTT() {
 }
 
 void SensorMQ2(){ //MQ2 sensor initialization
-  pinMode(MQ2pin, INPUT); // set the pin as input
+  pinMode(MQ2_DIGITAL_PIN, INPUT); // set the pin as input
   Serial.println("MQ2 warming up");
   delay(200);
 }
@@ -178,55 +165,31 @@ void publishTelemetry(){
     return;
   }
 
-  //client.publish("sensor/wokwi/test", "hola desde Wokwi");
-  //Serial.println("Mensaje MQTT enviado");
-
-  //print temperature and humidity
-  //Serial.println("Temp " + String(data.temperature, 2) + "ºC");
-  //Serial.println("Humidity " + String(data.humidity, 1) + "%");
-
   //print value sensor gas
   //sensorValue = digitalRead(MQ2pin); // read digital output pin
-  gasValue = digitalRead(MQ2pin);
+  gasValue = digitalRead(MQ2_DIGITAL_PIN);
   unsigned long ts = time(nullptr);
-  /*if(sensorValue){
-    Serial.println("Smoke:  -");
-  }else{
-    Serial.println("Smoke: Detected");
-  }
-  Serial.println("--------------");*/
 
-  //String payload = "{";
-  //payload +="\nodo_id\":"+ String(random(0xffff), HEX) + ",";
-  //payload += "\"timestamp\":" + String(time(nullptr));
-  //payload += "\"temperature\":" + String(data.temperature, 2) + ",";
-  //payload += "\"humidity\":" + String(data.humidity, 1) + ",";
-  //payload += "\"gas\":" + String(sensorValue) + ",";
-  //payload += "\"status\":" + String(client.state());
-  //payload += "}";
   String payload = "{";
   payload += "\"node_id\":\"" + String(NODE_ID) + "\",";
   payload += "\"zone_id\":\"" + String(ZONE_ID) + "\",";
   payload += "\"timestamp\":" + String(ts) + ",";
+  payload += "\"sensors\"{";
   payload += "\"temperature_c\":" + String(data.temperature, 2) + ",";
   payload += "\"humidity_pct\":" + String(data.humidity, 1) + ",";
   payload += "\"gas_detected\":" + String(gasValue == 0 ? 1 : 0);
-  payload += "}";
-  //client.publish(mqtt_topic_temp, String(data.temperature, 2).c_str());
-  //client.publish(mqtt_topic_hum, String(data.humidity, 1).c_str());
-  //client.publish(mqtt_topic_gas, String(sensorValue).c_str());
-  //client.publish(mqtt_topic_payload, payload.c_str());
-  //client.publish("sensor/wokwi/payload", payload.c_str());
+  payload += "\"gas_mq2_raw\":" + String(gas.raw) + ",";
+  payload += "\"gas_mq2_ratio\":" + String(gas.ratio, 2) + ",";
+  payload += "\"gas_mq2_ppm\":" + String(gas.ppm);
+  payload += "}}";
+
   bool ok = client.publish(mqtt_topic_data.c_str(), payload.c_str());
 
   Serial.println("--------Telemetria MQTT --------");
-  //Serial.println("Temperature:" + String(data.temperature, 2) + "ºC");
-  //Serial.println("Humidity: " + String(data.humidity, 1) + " %");
-  //Serial.println(String("Gas: ") + (gasValue == 0 ? "SI" : "NO"));
+
   Serial.println("Payload: " + payload);
   Serial.println(ok ? "Publicación MQTT correcta" : "Error al publicar MQTT");
   Serial.println("------------------------");
-  //Serial.println(ok ? "Topicos enviados" : "ERROR al enviar topicos");
 
 }
 
