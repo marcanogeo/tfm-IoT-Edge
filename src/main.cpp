@@ -120,10 +120,6 @@ void reconnectMQTT() {
 
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
-      //client.subscribe("sensor/wokwi/#");
-      //Serial.println("Client ID: " + clientId);
-      //Serial.println("Topic Telemetria: " + String(mqtt_topic_data));
-      //Serial.println("Topic status: " + String(mqtt_topic_status));
     
       client.subscribe(mqtt_topic_cmd.c_str());
 
