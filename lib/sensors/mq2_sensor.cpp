@@ -11,7 +11,7 @@ MQ2Reading MQ2Sensor::read(){
     MQ2Reading result;
     result.raw = analogRead(pin); // Read the raw ADC value from the sensor
     result.voltage = (result.raw / 4095.0) * vcc; // Convert raw ADC value to voltage (assuming 12-bit ADC)
-    result.percent = (result.raw / 4095.0) * 100,0; // Convert raw value to percentage (0-100%)
+    result.percent = (result.raw / 4095.0) * 100.0; // Convert raw value to percentage (0-100%)
   
     if(result.voltage <= 0.01) {
       result.rs = -1; // Invalid RS value for very low voltage
@@ -19,6 +19,8 @@ MQ2Reading MQ2Sensor::read(){
       result.ppm_est = -1; // Cannot estimate ppm if ratio is invalid
       return result;
     }
+    result.rs = (vcc - result.voltage) * rl / result.voltage; // Calculate RS using the voltage divider formula
+    result.ratio = result.rs / r0; // Calculate ratio of RS to R0
     result.ppm_est = 1000.0 / result.ratio; // Placeholder estimation, should be based on sensor characteristics
     if(result.ppm_est < 0) result.ppm_est = 0; // Ensure ppm estimation is not negative
 

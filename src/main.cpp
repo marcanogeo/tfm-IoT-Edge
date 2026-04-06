@@ -3,10 +3,18 @@
 #include <WiFi.h>
 #include "time.h"
 #include <PubSubClient.h>
+#include "config.h"
+//#include "mqqt_config.h"
+#include "node_metadata.h"
+#include "topics.h"
+#include "mq2_sensor.h"
+#include "ldr_sensor.h"
+#include "dht_sensor.h"
 
 #define MQ2_DIGITAL_PIN 14 //Pin where the MQ2 sensor is connected
 const int DHT_PIN = 27; // Pin where the DHT22 sensor is connected
 #define MQ2_ANALOG_PIN 35 //Pin for analog reading of MQ2 sensor (if needed)
+#define LIGHT_SENSOR_PIN 34 //Pin for light sensor (LDR)
 
 //Setting WiFi credentials for Wokwi simulation
 const char* SSID = "Wokwi-GUEST";
@@ -21,21 +29,21 @@ const int mqtt_port = 1883;
 #endif
 
 #if NODE_NUM == 1
-  const char* NODE_ID = "nodo_1";
-  const char* ZONE_ID = "zona_norte";
+  #define NODE_ID_STR "nodo_1"
+  #define ZONE_ID_STR "zona_norte"
 #elif NODE_NUM == 2
-  const char* NODE_ID = "nodo_2";
-  const char* ZONE_ID = "zona_sur";
+  #define NODE_ID_STR "nodo_2"
+  #define ZONE_ID_STR "zona_sur"
 #elif NODE_NUM == 3
-  const char* NODE_ID = "nodo_3";
-  const char* ZONE_ID = "zona_este";
+  #define NODE_ID_STR "nodo_3"
+  #define ZONE_ID_STR "zona_este"
 #elif NODE_NUM == 4
-  const char* NODE_ID = "nodo_4";
-  const char* ZONE_ID = "zona_oeste";
+  #define NODE_ID_STR "nodo_4"
+  #define ZONE_ID_STR "zona_oeste"
 #else
-  const char* NODE_ID = "nodo_X";
-  const char* ZONE_ID = "zona_X";
-#endif      
+  #define NODE_ID_STR "nodo_X"
+  #define ZONE_ID_STR "zona_X"
+#endif
 
 String mqtt_topic_data;
 String mqtt_topic_status;
@@ -56,8 +64,8 @@ const unsigned long publishInterval = 5000; // Publish every 5 seconds
 
 //int sensorValue; // variable to store the sensor value
 //int gasValue = 0; // Variable to store the gas sensor value
-int gasDetected = digitalRead(MQ2_DIGITAL_PIN); // Initialize gasValue with the current state of the MQ2 sensor
-int rawValue = analogRead(MQ2_ANALOG_PIN); // Read the raw analog value from the MQ2 sensor
+int gasDetected = 0; // Initialize gas sensor state later
+int rawValue = 0; // Read the raw analog value in setup or loop
 
  // WiFi connection function
 void connectWiFi(){
@@ -122,7 +130,7 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
 void reconnectMQTT() {
   while (!client.connected()) {
     Serial.print("Connecting MQTT...");
-    String clientId = "ESP32_" + String(NODE_ID)+"_"+String(random(0xffff), HEX);
+    String clientId = "ESP32_" + String(NODE_ID_STR) +"_"+String(random(0xffff), HEX);
 
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
@@ -148,7 +156,7 @@ void reconnectMQTT() {
 float CalculateRS(int adcValue, float vcc = 3.3, float rl = 5.0){
   float voltage = (adcValue / 4095.0) * vcc; // Convert ADC value to voltage
   if (voltage <= 0.01) return -1; // Avoid division by zero or very low voltage
-  //freturn (vcc - voltage) * rl / voltage; // Calculate RS using the voltage divider formula
+  float rs = (vcc - voltage) * rl / voltage; // Calculate RS using the voltage divider formula
   return rs;
 }
 
@@ -160,10 +168,8 @@ void SensorMQ2(){
   //Serial.println("MQ2 gas percentage: " + String(gasPercentage, 2) + "%");
   //float ratio = gasPercentage / 100.0; // Convert percentage to ratio (0.0 to 1.0)
 
-
   //pinMode(MQ2_DIGITAL_PIN, INPUT); // set the pin as input
   //Serial.println("MQ2 warming up");
-  MQ2Sensor mq2(MQ2_ANALOG_PIN, 3.3, 5.0, 10.0); // Create MQ2 sensor object with specified parameters
 
   delay(2000);
 }
@@ -185,20 +191,23 @@ void publishTelemetry(){
 
   //print value sensor gas
   //sensorValue = digitalRead(MQ2pin); // read digital output pin
+  MQ2Sensor mq2(MQ2_ANALOG_PIN, 3.3, 5.0, 10.0);
+  MQ2Reading mq2Data = mq2.read();
   gasDetected = digitalRead(MQ2_DIGITAL_PIN);
   unsigned long ts = time(nullptr);
 
+
   String payload = "{";
-  payload += "\"node_id\":\"" + String(NODE_ID) + "\",";
-  payload += "\"zone_id\":\"" + String(ZONE_ID) + "\",";
+  payload += "\"node_id\":\"" + String(NODE_ID_STR) + "\",";
+  payload += "\"zone_id\":\"" + String(ZONE_ID_STR) + "\",";
   payload += "\"timestamp\":" + String(ts) + ",";
-  payload += "\"sensors\"{";
+  payload += "\"sensors\":{";
   payload += "\"temperature_c\":" + String(data.temperature, 2) + ",";
   payload += "\"humidity_pct\":" + String(data.humidity, 1) + ",";
-  payload += "\"gas_detected\":" + String(gasDetected == 0 ? 1 : 0);
-  payload += "\"gas_mq2_raw\":" + String(gas.raw) + ",";
-  payload += "\"gas_mq2_ratio\":" + String(gas.ratio, 2) + ",";
-  payload += "\"gas_mq2_ppm\":" + String(gas.ppm);
+  payload += "\"gas_detected\":" + String(gasDetected == 0 ? 1 : 0) + ",";
+  payload += "\"gas_mq2_raw\":" + String(mq2Data.raw) + ",";
+  payload += "\"gas_mq2_ratio\":" + String(mq2Data.ratio, 2) + ",";
+  payload += "\"gas_mq2_ppm\":" + String(mq2Data.ppm_est) + ",";
   payload += "\"luz\":" + String(analogRead(LIGHT_SENSOR_PIN));
   payload += "}}";
 
@@ -218,13 +227,13 @@ void setup(){
 
   randomSeed(esp_random()); // Initialize random seed for MQTT client ID
 
-  mqtt_topic_data = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/telemetria";
-  mqtt_topic_status = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/estado";
-  mqtt_topic_cmd = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/cmd";
-  mqtt_topic_alerts = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/alerta";
+  mqtt_topic_data = "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(NODE_ID_STR) + "/telemetria";
+  mqtt_topic_status = "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(NODE_ID_STR) + "/estado";
+  mqtt_topic_cmd = "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(NODE_ID_STR) + "/cmd";
+  mqtt_topic_alerts = "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(NODE_ID_STR) + "/alerta";
 
-  Serial.println("Nodo configurado: " + String(NODE_ID));  
-  Serial.println("Zona configurada: " + String(ZONE_ID));
+  Serial.println("Nodo configurado: " + String(NODE_ID_STR));  
+  Serial.println("Zona configurada: " + String(ZONE_ID_STR));
   
   connectWiFi();
 

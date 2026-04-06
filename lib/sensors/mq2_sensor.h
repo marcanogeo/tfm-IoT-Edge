@@ -16,9 +16,8 @@ class MQ2Sensor{
     float rl;
     float r0;
   public:
-    MQ2Sensor(int analogPin, float supplyVoltage = 3.3, float loadResistance = 5.0, float baseResistance = 10.0){
-      MQ2Reading read();
-    }
+    MQ2Sensor(int analogPin, float supplyVoltage = 3.3, float loadResistance = 5.0, float baseResistance = 10.0);
+    MQ2Reading read();
 };
 
 //float CalculateRS(int adcValue, float vcc = 3.3, float rl = 5.0);
