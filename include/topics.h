@@ -1,9 +1,23 @@
-#ifndef TOPCIS_H
-#define TOPCIS_H
+#ifndef TOPICS_H
+#define TOPICS_H
 
-#define TOPIC_TELEMETRY "tfm/ambiental/zona_norte/nodo_1/telemetria"
-#define TOPIC_STATUS "tfm/ambiental/zona_norte/nodo_1/estado"
-#define TOPIC_CMD "tfm/ambiental/zona_norte/nodo_1/cmd"
-#define TOPIC_ALERTS "tfm/ambiental/zona_norte/nodo_1/alerta"   
+#include <Arduino.h>
+#include "node_metadata.h"
 
-#endif // TOPCIS_H
+inline String topicTelemetry() {
+  return "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(DEVICE_ID_STR) + "/telemetria";
+}
+
+inline String topicStatus() {
+  return "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(DEVICE_ID_STR) + "/estado";
+}
+
+inline String topicCmd() {
+  return "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(DEVICE_ID_STR) + "/cmd";
+}
+
+inline String topicAlert() {
+  return "tfm/ambiental/" + String(ZONE_ID_STR) + "/" + String(DEVICE_ID_STR) + "/alerta";
+}
+
+#endif
