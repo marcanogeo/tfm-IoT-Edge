@@ -18,8 +18,8 @@
   #define DEVICE_ID "nodo_4"
   #define ZONE_ID "zona_oeste"
 #else
-  #define DEVICE_ID "nodo_X"
-  #define ZONE_ID "zona_X"
+  #define DEVICE_ID "nodo_x"
+  #define ZONE_ID "zona_x"
 #endif
 
 #endif

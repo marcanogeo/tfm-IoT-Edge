@@ -8,12 +8,9 @@
 #include "node_metadata.h"
 #include "topics.h"
 #include "mq2_sensor.h"
-
-void connectWiFi();
-void initTime();
-void printLocalTime();
-void publishTelemetry();
-void runMainLoop();
+#include "app_config.h"
+#include "app_publish.h"
+#include "app_loop.h"
 
 WiFiClient espClient;
 PubSubClient client(espClient);
