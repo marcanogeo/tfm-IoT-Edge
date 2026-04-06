@@ -128,12 +128,11 @@ tfm/ambiental/{zona}/{nodo_id}/{tipo}
 
 ### Tópicos por nodo
 
-| Nodo | Zona | Tópico Telemetría | Tópico Estado | Tópico Comandos | Tópico Alertas |
-|------|------|-------------------|---------------|-----------------|----------------|
-
-| **Nodo 1** | Zona Norte | `tfm/ambiental/zona_norte/nodo_1/telemetria` | `tfm/ambiental/zona_norte/nodo_1/estado` | `tfm/ambiental/zona_norte/nodo_1/cmd` | `tfm/ambiental/zona_norte/nodo_1/alerta` | /n
-| **Nodo 2** | Zona Sur | `tfm/ambiental/zona_sur/nodo_2/telemetria` | `tfm/ambiental/zona_sur/nodo_2/estado` | `tfm/ambiental/zona_sur/nodo_2/cmd` | `tfm/ambiental/zona_sur/nodo_2/alerta` |
-| **Nodo 3** | Zona Este | `tfm/ambiental/zona_este/nodo_3/telemetria` | `tfm/ambiental/zona_este/nodo_3/estado` | `tfm/ambiental/zona_este/nodo_3/cmd` | `tfm/ambiental/zona_este/nodo_3/alerta` |
+| Nodo       | Zona       | Tópico Telemetría                            | Tópico Estado                            | Tópico Comandos                       | Tópico Alertas                           |
+|------------|------------|----------------------------------------------|------------------------------------------|---------------------------------------|------------------------------------------|
+| **Nodo 1** | Zona Norte | `tfm/ambiental/zona_norte/nodo_1/telemetria` | `tfm/ambiental/zona_norte/nodo_1/estado` | `tfm/ambiental/zona_norte/nodo_1/cmd` | `tfm/ambiental/zona_norte/nodo_1/alerta` |
+| **Nodo 2** | Zona Sur   | `tfm/ambiental/zona_sur/nodo_2/telemetria`   | `tfm/ambiental/zona_sur/nodo_2/estado`   | `tfm/ambiental/zona_sur/nodo_2/cmd`   | `tfm/ambiental/zona_sur/nodo_2/alerta`   |
+| **Nodo 3** | Zona Este  | `tfm/ambiental/zona_este/nodo_3/telemetria`  | `tfm/ambiental/zona_este/nodo_3/estado`  | `tfm/ambiental/zona_este/nodo_3/cmd`  | `tfm/ambiental/zona_este/nodo_3/alerta`  |
 | **Nodo 4** | Zona Oeste | `tfm/ambiental/zona_oeste/nodo_4/telemetria` | `tfm/ambiental/zona_oeste/nodo_4/estado` | `tfm/ambiental/zona_oeste/nodo_4/cmd` | `tfm/ambiental/zona_oeste/nodo_4/alerta` |
 
 ## Payload de telemetría
@@ -159,17 +158,16 @@ Los nodos publican un payload JSON con los siguientes campos:
 
 ### Campos del payload
 
-| Campo | Descripción | Unidad | Rango |
-|-------|-------------|--------|-------|
-
-| `timestamp` | Marca de tiempo ISO 8601 | - | UTC |
-| `nodo_id` | Identificador del nodo | - | nodo_1 a nodo_4 |
-| `zona_id` | Zona geográfica | - | zona_norte, zona_sur, zona_este, zona_oeste |
-| `temperatura` | Temperatura ambiente | °C | -40 a +80 |
-| `humedad` | Humedad relativa | % | 0 a 100 |
-| `luminosidad` | Nivel de luz | Luxes | 0 a 4095 (analógico) |
-| `gas_ppm` | Concentración de gas | PPM | 0 a ~10000 |
-| `gas_detectado` | Alerta de gas | bool | true/false |
+| Campo           | Descripción              | Unidad| Rango                                       |
+|-----------------|--------------------------|-------|---------------------------------------------|
+| `timestamp`     | Marca de tiempo ISO 8601 |  -    | UTC                                         |
+| `nodo_id`       | Identificador del nodo   | -     | nodo_1 a nodo_4                             |
+| `zona_id`       | Zona geográfica          |  -    | zona_norte, zona_sur, zona_este, zona_oeste |
+| `temperatura`   | Temperatura ambiente     | °C    | -40 a +80                                   |
+| `humedad`       | Humedad relativa         | %     | 0 a 100                                     |
+| `luminosidad`   | Nivel de luz             | Luxes | 0 a 4095 (analógico)                        |
+| `gas_ppm`       | Concentración de gas     | PPM   | 0 a ~10000                                  |
+| `gas_detectado` | Alerta de gas            | bool  | true/false                                  |
 
 ## Estructura del proyecto
 
