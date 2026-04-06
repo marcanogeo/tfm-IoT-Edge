@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <PubSubClient.h>
+#include "time.h"
 #include "DHTesp.h"
 #include "config.h"
 #include "node_metadata.h"
