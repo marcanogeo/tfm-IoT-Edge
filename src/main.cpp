@@ -21,20 +21,20 @@ const int mqtt_port = 1883;
 #endif
 
 #if NODE_NUM == 1
-  const char* NODE_ID = "nodo1";
+  const char* NODE_ID = "nodo_1";
   const char* ZONE_ID = "zona_norte";
 #elif NODE_NUM == 2
-  const char* NODE_ID = "nodo2";
+  const char* NODE_ID = "nodo_2";
   const char* ZONE_ID = "zona_sur";
 #elif NODE_NUM == 3
-  const char* NODE_ID = "nodo3";
+  const char* NODE_ID = "nodo_3";
   const char* ZONE_ID = "zona_este";
 #elif NODE_NUM == 4
-  const char* NODE_ID = "nodo4";
+  const char* NODE_ID = "nodo_4";
   const char* ZONE_ID = "zona_oeste";
 #else
-  const char* NODE_ID = "nodoX";
-  const char* ZONE_ID = "zonaX";
+  const char* NODE_ID = "nodo_X";
+  const char* ZONE_ID = "zona_X";
 #endif      
 
 String mqtt_topic_data;
@@ -130,7 +130,7 @@ void reconnectMQTT() {
       client.subscribe(mqtt_topic_cmd.c_str());
 
       bool ok1 = client.publish(mqtt_topic_status.c_str(), "online", true);
-     // bool ok2 = client.publish("tfm/debug/nodo1", "hola_desde_wokwi", true);
+     // bool ok2 = client.publish("tfm/debug/nodo_1", "hola_desde_wokwi", true);
 
       Serial.println(ok1 ? "Estado retained ok": "Estado retained ERROR");
       //Serial.println(ok2 ? "Debug retained ok": "Debug retained ERROR");
@@ -218,10 +218,10 @@ void setup(){
 
   randomSeed(esp_random()); // Initialize random seed for MQTT client ID
 
-  mqtt_topic_data = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/telemetria";
-  mqtt_topic_status = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/estado";
-  mqtt_topic_cmd = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/cmd";
-  mqtt_topic_alerts = "tfm/ambiental/" + String(ZONE_ID)"/" + String(NODE_ID) + "/alerta";
+  mqtt_topic_data = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/telemetria";
+  mqtt_topic_status = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/estado";
+  mqtt_topic_cmd = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/cmd";
+  mqtt_topic_alerts = "tfm/ambiental/" + String(ZONE_ID) + "/" + String(NODE_ID) + "/alerta";
 
   Serial.println("Nodo configurado: " + String(NODE_ID));  
   Serial.println("Zona configurada: " + String(ZONE_ID));
