@@ -15,7 +15,7 @@ Este proyecto implementa nodos ESP32 virtualizados con sensores ambientales que 
 - [Requisitos](#requisitos)
 - [Repositorio complementario](#repositorio-complementario)
 
-## 🌡️ Sensores
+## Sensores
 
 Cada nodo está equipado con los siguientes sensores ambientales:
 
@@ -26,7 +26,7 @@ Cada nodo está equipado con los siguientes sensores ambientales:
 | **LDR** | Luminosidad | Luxes / Valor analógico | GPIO 35 |
 | **MQ2** | Detección de gas/humo | PPM | GPIO 14 (digital), GPIO 35 (analógico) |
 
-## 🔨 Compilación de nodos
+## Compilación de nodos
 
 ### Requisitos previos
 
@@ -70,9 +70,9 @@ Esta definición determina automáticamente:
 - La zona geográfica
 - Los tópicos MQTT específicos
 
-## 🎮 Simulación en Wokwi
+## Simulación en Wokwi
 
-### Requisitos
+### Requisitos para Simulación
 
 - Cuenta activa en [Wokwi](https://wokwi.com/)
 - Conexión al simulador desde VS Code o navegador web
@@ -117,7 +117,7 @@ La simulación se conecta automáticamente a:
 - **Broker MQTT**: `broker.hivemq.com` (público)
 - **Puerto MQTT**: 1883
 
-## 📡 Tópicos MQTT
+## Tópicos MQTT
 
 Los nodos publican en los siguientes tópicos:
 
@@ -137,7 +137,7 @@ tfm/ambiental/{zona}/{nodo_id}/{tipo}
 | **Nodo 3** | Zona Este | `tfm/ambiental/zona_este/nodo_3/telemetria` | `tfm/ambiental/zona_este/nodo_3/estado` | `tfm/ambiental/zona_este/nodo_3/cmd` | `tfm/ambiental/zona_este/nodo_3/alerta` |
 | **Nodo 4** | Zona Oeste | `tfm/ambiental/zona_oeste/nodo_4/telemetria` | `tfm/ambiental/zona_oeste/nodo_4/estado` | `tfm/ambiental/zona_oeste/nodo_4/cmd` | `tfm/ambiental/zona_oeste/nodo_4/alerta` |
 
-## 📦 Payload de telemetría
+## Payload de telemetría
 
 ### Formato JSON
 
@@ -172,7 +172,7 @@ Los nodos publican un payload JSON con los siguientes campos:
 | `gas_ppm` | Concentración de gas | PPM | 0 a ~10000 |
 | `gas_detectado` | Alerta de gas | bool | true/false |
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ``` plain
 .
@@ -215,7 +215,7 @@ Los nodos publican un payload JSON con los siguientes campos:
 └── README.md                     # Este archivo
 ```
 
-## ✅ Requisitos
+## Requisitos
 
 ### Hardware (para deployment real)
 
@@ -232,7 +232,7 @@ Los nodos publican un payload JSON con los siguientes campos:
 - [Wokwi Simulator](https://docs.wokwi.com/en/vscode/getting-started) (para simulación)
 - [Git](https://git-scm.com/)
 
-## 🔗 Repositorio complementario
+## Repositorio complementario
 
 El backend y la orquestación de servicios se encuentran en:
 
@@ -261,18 +261,18 @@ InfluxDB + MongoDB
 Grafana Dashboards
 ```
 
-## 📚 Documentación adicional
+## Documentación adicional
 
 - [Arquitectura del sistema](./docs/arquitecture_edge.md)
 - [Contrato MQTT](./docs/contrate_mqtt.md)
 - [Especificación de payloads](./docs/payloads.md)
 - [Detalles de sensores](./docs/sensors.md)
 
-## 📄 Licencia
+## Licencia
 
 Consulta el archivo [LICENSE](./LICENSE) para más detalles.
 
-## 👨‍💻 Autor
+## Autor
 
 **marcanogeo** - [GitHub](https://github.com/marcanogeo)
 
