@@ -28,8 +28,8 @@ void publishTelemetry() {
   unsigned long ts = time(nullptr);
 
   String payload = buildTelemetryPayload(
-    DEVICE_ID_STR,
-    ZONE_ID_STR,
+    DEVICE_ID,
+    ZONE_ID,
     ts,
     data.temperature,
     data.humidity,

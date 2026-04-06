@@ -6,20 +6,20 @@
 #endif
 
 #if NODE_NUM == 1
-  #define DEVICE_ID_STR "nodo_1"
-  #define ZONE_ID_STR "zona_norte"
+  #define DEVICE_ID "nodo_1"
+  #define ZONE_ID "zona_norte"
 #elif NODE_NUM == 2
-  #define DEVICE_ID_STR "nodo_2"
-  #define ZONE_ID_STR "zona_sur"
+  #define DEVICE_ID "nodo_2"
+  #define ZONE_ID "zona_sur"
 #elif NODE_NUM == 3
-  #define DEVICE_ID_STR "nodo_3"
-  #define ZONE_ID_STR "zona_este"
+  #define DEVICE_ID "nodo_3"
+  #define ZONE_ID "zona_este"
 #elif NODE_NUM == 4
-  #define DEVICE_ID_STR "nodo_4"
-  #define ZONE_ID_STR "zona_oeste"
+  #define DEVICE_ID "nodo_4"
+  #define ZONE_ID "zona_oeste"
 #else
-  #define DEVICE_ID_STR "nodo_X"
-  #define ZONE_ID_STR "zona_X"
+  #define DEVICE_ID "nodo_X"
+  #define ZONE_ID "zona_X"
 #endif
 
 #endif

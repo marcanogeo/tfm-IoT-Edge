@@ -36,7 +36,7 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
 void reconnectMQTT() {
   while (!client.connected()) {
     Serial.print("Conectando MQTT...");
-    String clientId = "ESP32_" + String(DEVICE_ID_STR) + "_" + String(random(0xffff), HEX);
+    String clientId = "ESP32_" + String(DEVICE_ID) + "_" + String(random(0xffff), HEX);
 
     if (client.connect(clientId.c_str())) {
       Serial.println(" conectado");
@@ -57,8 +57,8 @@ void setup() {
   randomSeed(esp_random());
   analogReadResolution(ADC_RESOLUTION_BITS);
 
-  Serial.println("Nodo: " + String(DEVICE_ID_STR));
-  Serial.println("Zona: " + String(ZONE_ID_STR));
+  Serial.println("Nodo: " + String(DEVICE_ID));
+  Serial.println("Zona: " + String(ZONE_ID));
 
   connectWiFi();
   initTime();
