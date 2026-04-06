@@ -22,9 +22,9 @@ Cada nodo está equipado con los siguientes sensores ambientales:
 | Sensor | Descripción | Medida | Pin (ESP32) |
 |--------|-------------|--------|-------------|
 
-| **DHT22** | Temperatura y Humedad | °C, % | GPIO 27 |
-| **LDR** | Luminosidad | Luxes / Valor analógico | GPIO 35 |
-| **MQ2** | Detección de gas/humo | PPM | GPIO 14 (digital), GPIO 35 (analógico) |
+| **DHT22** | Temperatura y Humedad | °C, %                   | GPIO 27                                |
+| **LDR**   | Luminosidad           | Luxes / Valor analógico | GPIO 35                                |
+| **MQ2**   | Detección de gas/humo | PPM                     | GPIO 14 (digital), GPIO 35 (analógico) |
 
 ## Compilación de nodos
 
