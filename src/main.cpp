@@ -57,8 +57,8 @@ void setup() {
   randomSeed(esp_random());
   analogReadResolution(ADC_RESOLUTION_BITS);
 
-  Serial.println("Nodo: " + String(DEVICE_ID));
-  Serial.println("Zona: " + String(ZONE_ID));
+  Serial.println("Nodo: " + String(DEVICE_ID_STR));
+  Serial.println("Zona: " + String(ZONE_ID_STR));
 
   connectWiFi();
   initTime();
