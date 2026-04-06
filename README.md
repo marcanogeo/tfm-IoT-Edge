@@ -78,7 +78,7 @@ Esta definición determina automáticamente:
 
 ### Lanzar simulación para cada nodo
 
-Cada nodo tiene su própria carpeta de configuración Wokwi:
+Cada nodo tiene su propia carpeta de configuración Wokwi:
 
 ``` plain
 wokwi/
@@ -96,13 +96,13 @@ wokwi/
     └── wokwi.toml
 ```
 
-**Opción 1: Desde VS Code
+**Opción 1: Desde VS Code**
 
 1. Instala la extensión [Wokwi Simulator](https://docs.wokwi.com/en/vscode/getting-started)
 2. Abre la carpeta `wokwi/nodoX/` en VS Code
 3. Presiona `F1` → `Wokwi: Start Simulator`
 
-**Opción 2: Desde Wokwi web
+**Opción 2: Desde Wokwi web**
 
 1. Navega a [https://wokwi.com/](https://wokwi.com/)
 2. Importa o crea un nuevo proyecto
@@ -131,7 +131,7 @@ tfm/ambiental/{zona}/{nodo_id}/{tipo}
 | Nodo | Zona | Tópico Telemetría | Tópico Estado | Tópico Comandos | Tópico Alertas |
 |------|------|-------------------|---------------|-----------------|----------------|
 
-| **Nodo 1** | Zona Norte | `tfm/ambiental/zona_norte/nodo_1/telemetria` | `tfm/ambiental/zona_norte/nodo_1/estado` | `tfm/ambiental/zona_norte/nodo_1/cmd` | `tfm/ambiental/zona_norte/nodo_1/alerta` |
+| **Nodo 1** | Zona Norte | `tfm/ambiental/zona_norte/nodo_1/telemetria` | `tfm/ambiental/zona_norte/nodo_1/estado` | `tfm/ambiental/zona_norte/nodo_1/cmd` | `tfm/ambiental/zona_norte/nodo_1/alerta` | /n
 | **Nodo 2** | Zona Sur | `tfm/ambiental/zona_sur/nodo_2/telemetria` | `tfm/ambiental/zona_sur/nodo_2/estado` | `tfm/ambiental/zona_sur/nodo_2/cmd` | `tfm/ambiental/zona_sur/nodo_2/alerta` |
 | **Nodo 3** | Zona Este | `tfm/ambiental/zona_este/nodo_3/telemetria` | `tfm/ambiental/zona_este/nodo_3/estado` | `tfm/ambiental/zona_este/nodo_3/cmd` | `tfm/ambiental/zona_este/nodo_3/alerta` |
 | **Nodo 4** | Zona Oeste | `tfm/ambiental/zona_oeste/nodo_4/telemetria` | `tfm/ambiental/zona_oeste/nodo_4/estado` | `tfm/ambiental/zona_oeste/nodo_4/cmd` | `tfm/ambiental/zona_oeste/nodo_4/alerta` |
