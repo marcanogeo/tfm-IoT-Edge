@@ -66,6 +66,7 @@ void setup() {
 
   client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(mqttCallback);
+  client.setBufferSize(1024); // Aumentar el tamaño del buffer para mensajes más grandes
 }
 
 void loop() {
