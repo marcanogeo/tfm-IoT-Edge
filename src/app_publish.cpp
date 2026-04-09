@@ -39,7 +39,10 @@ void publishTelemetry() {
     gas
   );
 
-  bool ok = client.publish(topicTelemetry().c_str(), payload.c_str());
+  client.publish("test", "hi");
+  client.publish(topicTelemetry().c_str(), "{\"ok\":1");
+  //bool ok = client.publish(topicTelemetry().c_str(), payload.c_str());
+  bool ok = client.publish("test", "{\"ok\":1}");
 
   Serial.println("----- TELEMETRÍA -----");
   Serial.println(payload);
