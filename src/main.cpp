@@ -32,8 +32,8 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
 
 void reconnectMQTT() {
   while (!client.connected()) {
-    Serial.print("Conectando MQTT...");
-    String clientId = "ESP32_" + String(DEVICE_ID) + "_" + String(random(0xffff), HEX);
+   // Serial.print("Conectando MQTT...");
+   // String clientId = "ESP32_" + String(DEVICE_ID) + "_" + String(random(0xffff), HEX);
 
     if (client.connect(clientId.c_str())) {
       Serial.println(" conectado");
