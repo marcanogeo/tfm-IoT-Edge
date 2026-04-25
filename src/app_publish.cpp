@@ -39,8 +39,8 @@ void publishTelemetry() {
     gas
   );
 
-  client.publish("test", "hi");
-  client.publish(topicTelemetry().c_str(), "{\"ok\":1");
+  //client.publish("test", "hi");
+  //client.publish(topicTelemetry().c_str(), "{\"ok\":1");
   //bool ok = client.publish(topicTelemetry().c_str(), payload.c_str());
   bool ok = client.publish("test", "{\"ok\":1}");
 
