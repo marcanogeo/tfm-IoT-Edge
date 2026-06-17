@@ -92,4 +92,3 @@ Proyecto con licencia en el fichero `LICENSE`.
 Contacto
 -------
 Para dudas o soporte, abre un issue en el repo.
-
