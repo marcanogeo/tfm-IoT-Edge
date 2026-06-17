@@ -31,4 +31,4 @@
     "gas_mq2_ratio": 2.18,
     "gas_mq2_ppm_est": 410.2
   }
-}
+  
